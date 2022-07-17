@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="logo.jpeg" type="image/png" alt="logo">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Smart ATM</title>
+</head>
+<style>
+    #map{
+        margin-top: 110px;
+        width: 100%;
+        height: 350px;
+    }
+    body{
+        background-color: whitesmoke;
+    }
+    .deposit{
+        display: none;
+    }
+    .deposit .container{
+        background-color: whitesmoke;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .deposit .container h3{
+        font-size: 55px;
+        font-family: 'Cairo', sans-serif;
+        border-bottom: 1px solid black;
+        color: rgb(66, 103, 178);
+    }
+    .deposit .container a{
+        padding: 25px;
+        font-size: large;
+        background-color: rgb(66, 103, 178);
+        color: whitesmoke;
+        margin: 10px;
+        cursor: pointer;
+        border-radius: 15px;
+    }
+    .deposit .container a:hover{
+        background-color: whitesmoke;
+        color:rgb(66, 103, 178);
+    }
+    </style>
+
+<body>
+    <header>
+        <div class="title">
+          <a href="index.html">
+            <img src="logo.jpeg" alt="logo">
+          </a>   
+        </div>
+    
+        <div class="spred-links">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about-us">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+    
+        <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          <a href="index.html">Home</a>
+          <a href="#services">Services</a>
+          <a href="#about-us">About Us</a>
+          <a href="contact.html">Contact Us</a>
+        </div>
+    
+          <span onclick="openNav()"><i class="fa fa-bars"></i></span>
+    
+        <script>
+          function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+          }
+    
+          function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft= "0";
+            document.body.style.backgroundColor = "white";
+          }
+        </script>
+    </header>
+    <!-- start of maps -->
+    <div id="map"></div>
+    <script>
+        function initMap() 
+        {
+            var options = {
+                zoom: 11,
+                center:{lat:30.0660, lng:31.4856}
+            }
+
+            var map = new
+            google.maps.Map(document.getElementById('map'), options);
+
+            addMarker({
+                coords:{lat:30.0661, lng:31.4855}, 
+                iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+            });
+            addMarker({
+                coords:{lat:30.059, lng:31.488},
+                iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+            });
+            addMarker({
+                coords:{lat:30.0586, lng:31.491},
+                iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+            });
+
+            // add marker
+            function addMarker(props) {
+                var marker = new google.maps.Marker({
+                    position: props.coords, 
+                    map: map,
+                    icon: props.iconImage
+                });
+            }
+            var showPosition = function(position) 
+            {
+                    var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                        marker = new google.maps.Marker({
+                            position: userLatLng,
+                            title: 'Your Location',
+                            draggable: true,
+                            map: map,
+                            // icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+                });
+            }
+            navigator.geolocation.getCurrentPosition(showPosition);
+        }
+    </script>
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?v=weekly
+        &key=AIzaSyCsbDQ2czz_U1HTC3UAK2N74IvSvOXJUtk&callback=initMap">
+    </script>
+    <!--start of main body-->
+    <div class="main-body" id="main">
+        <div class="container">
+            <div class="box with-draw">
+                <img src="with-draw.png" alt="with-draw">
+                <a href="#">WITH DRAW</a>
+            </div>
+            <div class="box deposit">
+                <img src="deposit.png" alt="deposit">
+                <a onclick="show_hide()">Deposit</a>
+            </div>
+        </div>
+    </div>
+    <div class="draw">
+        <div class="container">
+            <h3>Enter the value of with-draw:</h3>
+            <input type="number" name="with-draw" id="with-draw" value="Enter the value">
+        </div>
+    </div>
+    <div class="deposit" id="deposit">
+        <div class="container">
+            <h3>Your Distentation:</h3>
+            <a href="https://www.google.com/maps/dir//30.056,31.45/@30.056,31.4478113,17z">Start</a>  
+        </div>
+    </div>
+    <script>
+        var x = document.getElementById("deposit");
+        var y = document.getElementById("main")
+        function show_hide()
+        {
+            if(x.style.display === "none")
+            {
+                x.style.display = "block";
+                y.style.display = "none"
+            }
+            else{
+                x.style.display = "none";
+                y.style.display = "block";
+            }
+        }
+    </script>
+    <!--start of footer-->
+    <div class="footer">
+        <div class="container">
+            <div class="box">
+                <h3>Smart ATM</h3>
+                <p class="text">In some ways, programming is like painting. You start with a blank canvas and certain basic raw materials. You use a combination of science, art, and craft to determine what to do with them."</p>
+            </div>
+        </div>
+        <p class="copyright">Made by Galelians</p>
+    </div>
+    <!--end of footer-->
+</body>
+</html>
